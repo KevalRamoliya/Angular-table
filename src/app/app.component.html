@@ -1,0 +1,141 @@
+<app-header></app-header>
+<div class="container">
+  <div class="row">
+
+    <div class="col-8">
+
+      <form #form="ngForm" (ngSubmit)="onSubmit(form)"
+        class=" shadow-lg p-3 mb-5 bg-white rounded-4">
+
+        <!-- Name -->
+        <div class="form-group">
+          <label>Name:-</label>
+          <input type="text" placeholder="Enter your Name" name="name" ngModel
+            #Name="ngModel" class="form-control" minlength="3" required />
+
+          <div class="alert alert-danger" *ngIf="Name.invalid && Name.touched">
+            <div *ngIf="Name.errors?.['required']">Name is Required</div>
+            <div *ngIf="Name.errors?.['minlength']">Minimum Length Required</div>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label>Email:-</label>
+          <input type="email" placeholder="Enteer youe Email"
+            class="form-control" name="email" ngModel #Email="ngModel"
+            required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+
+          <div class="alert alert-danger" *ngIf="Email.invalid && Email.touched">
+            <div *ngIf="Email.errors?.['required']">Email is Required</div>
+            <div *ngIf="Email.errors?.['pattern']">Enter Correct Email address.</div>
+          </div>
+        </div>
+
+        <!-- Phone Number -->
+        <div class="form-group">
+
+          <label>Phone Number:-</label>
+          <input type="tel" placeholder="Enter Your Phone Number" ngModel
+            #Phone="ngModel" pattern="[789][0-9]{9}" required name="number"
+            class="form-control" />
+
+          <div class="alert alert-danger" *ngIf="Phone.invalid && Phone.touched">
+            <div *ngIf="Phone.errors?.['required']">Phone Number is Required</div>
+            <div *ngIf="Phone.errors?.['pattern']">Enter Correct Phone Number</div>
+          </div>
+        </div>
+
+        <!-- City select -->
+        <div class="form-group">
+          <label>City:-</label>
+          <select class="form-control" ngModel #City="ngModel" name="city"
+            required>
+            <option value disabled>Select City</option>
+            <option value="Surat">Surat</option>
+            <option value="Mumbai">Mumbai</option>
+            <option value="Gandhinagar">Gandhinagar</option>
+          </select>
+
+          <div class="alert alert-danger" *ngIf="City.invalid && City.touched">
+            <div *ngIf="City.errors?.['required']">Must Select City</div>
+          </div>
+        </div>
+
+        <!-- Gender -->
+        <div class="form-group">
+          <label>Gender:-</label>
+          <br>
+          <label for="male">
+            <input type="radio" value="male" name="gender" ngModel
+              #Gender="ngModel" required />Male
+          </label>
+          <br>
+          <label for="female">
+            <input type="radio" value="female" name="gender" ngModel
+              #Gender="ngModel" required />Female
+          </label>
+
+          <div class="alert alert-danger"
+            *ngIf="Gender.invalid && Gender.touched">
+            <div *ngIf="Gender.errors?.['required']">Must Select Gender</div>
+          </div>
+        </div>
+
+        <!-- Tearm and condition -->
+        <div class="form-group">
+          <label for="condition">
+            <input type="checkbox" value="true" ngModel #Conditon="ngModel"
+              name="condition" class="me-2" required />I agree all terms &
+            conditions.
+          </label>
+
+          <div class="alert alert-danger"
+            *ngIf="Conditon.invalid && Conditon.touched">
+            <div *ngIf="Conditon.errors?.['required']">Must fell chechbox</div>
+          </div>
+        </div>
+
+        <button [disabled]="!form.valid" class="btn btn-success mt-4">Submit</button>
+
+      </form>
+    </div>
+
+    <div class="col-4">
+      <table>
+
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Emai</th>
+            <th>Phone Nu.</th>
+            <th>City</th>
+            <th>Gender</th>
+          </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let userdata of usersArray">
+              <td>{{userdata.name}}</td>
+              <td>{{userdata.email}}</td>
+              <td>{{userdata.number}}</td>
+              <td>{{userdata.city}}</td>
+              <td>{{userdata.gender}}</td>
+            </tr>
+        </tbody>
+
+      </table>
+
+      <!-- to do list -->
+      <input type="text" placeholder="Enter Name" #test>
+      <button (click)="adddata(test.value)">Add data</button>
+      <ul *ngFor="let items of usertodo">
+        <li>{{items.name}}</li>
+        <button (click)="removedata(items)">Remove data</button>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<router-outlet></router-outlet>
