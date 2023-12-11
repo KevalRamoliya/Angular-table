@@ -1,4 +1,5 @@
 <app-header></app-header>
+<h1>Template driven form</h1>
 <div class="container">
   <div class="row">
 
@@ -115,24 +116,65 @@
         </thead>
 
         <tbody>
-            <tr *ngFor="let userdata of usersArray">
-              <td>{{userdata.name}}</td>
-              <td>{{userdata.email}}</td>
-              <td>{{userdata.number}}</td>
-              <td>{{userdata.city}}</td>
-              <td>{{userdata.gender}}</td>
-            </tr>
+          <tr *ngFor="let userdata of usersArray">
+            <td>{{userdata.name}}</td>
+            <td>{{userdata.email}}</td>
+            <td>{{userdata.number}}</td>
+            <td>{{userdata.city}}</td>
+            <td>{{userdata.gender}}</td>
+          </tr>
         </tbody>
 
       </table>
 
       <!-- to do list -->
-      <input type="text" placeholder="Enter Name" #test>
-      <button (click)="adddata(test.value)">Add data</button>
-      <ul *ngFor="let items of usertodo">
-        <li>{{items.name}}</li>
-        <button (click)="removedata(items)">Remove data</button>
+      <input type="text" placeholder="name" #taskdata>
+      <button (click)="adddata(taskdata.value)">Add data</button>
+      <ul *ngFor="let data of userdata">
+        <li>{{data.name}}</li>
+        <button (click)="remove(data)">remove data</button>
       </ul>
+
+      <h1>Reactive Form</h1>
+      <form [formGroup]="loginform" (ngSubmit)="loginformsubmit()"  class=" shadow-lg p-3 mb-5 bg-white rounded-4">
+
+        <label>Name:-</label>
+        <input type="text" placeholder="Enter Your Name" name="name"
+          formControlName="name" class="form-control">
+        <span style="color: red;" *ngIf="name && name.invalid && name.touched">Name
+          field must required</span>
+
+        <label>Email:-</label>
+        <input type="email" placeholder="Enter Your Email" name="email"
+          formControlName="email" class="form-control">
+        <span style="color: red;"
+          *ngIf="email && email.invalid && email.touched">Email field must
+          required</span>
+
+        <h4>Address:-</h4>
+
+        <label>City:-</label>
+        <input type="text" placeholder="Enter your City" name="city"
+          class="form-control" formControlName="city">
+        <span style="color: red;" *ngIf="city && city.invalid && city.touched">City
+          field must required</span>
+
+        <label>State:-</label>
+        <input type="text" placeholder="Enter your State" name="state"
+          class="form-control" formControlName="state">
+        <span style="color: red;"
+          *ngIf="state && state.invalid && state.touched">State field must
+          required</span>
+
+        <label>Zip code :-</label>
+        <input type="text" placeholder="Enter your Zip code" name="code"
+          class="form-control" formControlName="code">
+        <span style="color: red;" *ngIf="code && code.invalid && code.touched">Zip
+          Code field must required</span>
+
+        <button type="submit" [disabled]="loginform.invalid">Log In</button>
+      </form>
+
     </div>
 
   </div>
