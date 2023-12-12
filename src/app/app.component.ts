@@ -11,11 +11,33 @@ export class AppComponent {
   title = 'form'
   usersArray: any[] = [];
 
+  ngOnInit() {
+    console.log('ngOnInit called');
+
+    const storealldata = localStorage.getItem('mydata');
+
+    if (storealldata !== null) {
+
+      try {
+        this.usersArray = JSON.parse(storealldata)
+      } catch (error) {
+        console.error('Error parsing JSON data:', error);
+      }
+    }
+
+  }
+
   onSubmit(formdata: NgForm) {
     console.log(formdata.value);
-
-    this.usersArray.push(formdata.value)
+    this.usersArray.push({ id: this.usersArray.length + 1, ...formdata.value })
+    localStorage.setItem('mydata', JSON.stringify(this.usersArray))
     formdata.reset()
+  }
+
+  removeall(itemsall: { id: number }) {
+    this.usersArray = this.usersArray.filter(usersArray => usersArray.id !== itemsall.id)
+
+    localStorage.setItem('mydata',JSON.stringify(this.usersArray))
   }
 
   // to do list
@@ -33,9 +55,9 @@ export class AppComponent {
   loginform = new FormGroup({
     name: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
-    city: new FormControl('',[Validators.required]),
-    state: new FormControl('',[Validators.required]),
-    code: new FormControl('',[Validators.required]),
+    city: new FormControl('', [Validators.required]),
+    state: new FormControl('', [Validators.required]),
+    code: new FormControl('', [Validators.required]),
   })
 
   loginformsubmit() {

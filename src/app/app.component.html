@@ -107,21 +107,27 @@
 
         <thead>
           <tr>
+            <th>Id</th>
             <th>Name</th>
             <th>Emai</th>
             <th>Phone Nu.</th>
             <th>City</th>
             <th>Gender</th>
+            <th>Action</th>
           </tr>
         </thead>
 
         <tbody>
           <tr *ngFor="let userdata of usersArray">
+            <td>{{userdata.id}}</td>
             <td>{{userdata.name}}</td>
             <td>{{userdata.email}}</td>
             <td>{{userdata.number}}</td>
             <td>{{userdata.city}}</td>
             <td>{{userdata.gender}}</td>
+            <td>
+              <button (click)="removeall({id:userdata.id})" class="btn btn-success">Delete</button>
+            </td>
           </tr>
         </tbody>
 
@@ -136,7 +142,8 @@
       </ul>
 
       <h1>Reactive Form</h1>
-      <form [formGroup]="loginform" (ngSubmit)="loginformsubmit()"  class=" shadow-lg p-3 mb-5 bg-white rounded-4">
+      <form [formGroup]="loginform" (ngSubmit)="loginformsubmit()"
+        class=" shadow-lg p-3 mb-5 bg-white rounded-4">
 
         <label>Name:-</label>
         <input type="text" placeholder="Enter Your Name" name="name"
